@@ -10,7 +10,7 @@ import streamlit as st
 import os 
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
-
+#import openai 
 from openai import OpenAI
 import configparser
 
@@ -40,7 +40,7 @@ client = OpenAI(
     api_key=retrieved_secret.value
     )
 
-    
+#openai.api_key = retrieved_secret.value
 # Creating a form in the Streamlit app for user input
 with st.form('my_form'):
     # Adding a text area for user input with a default prompt
@@ -73,13 +73,14 @@ with st.form('my_form'):
     def get_completion(prompt, model="gpt-4"):
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0 # this is the degree of randomness of the model's output
-             
+        model=model,
+        messages=messages,
+        temperature=0 # this is the degree of randomness of the model's output
+         
         )
-        
         st.info(response.choices[0].message.content)
+    
+
         
 
 
