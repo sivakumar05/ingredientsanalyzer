@@ -5,22 +5,29 @@
 References:
  https://discuss.streamlit.io/t/update-text-area/38084/6
 '''
+
 import streamlit as st
-from langchain.llms import OpenAI
-import openai 
-from langchain_community import llms
+import os
+from openai import OpenAI
+
+#from langchain_community import llms
+#from langchain.llms import OpenAI
+
 # Setting the title of the Streamlit application
 st.title('Product Ingredients Analyzer')
 
 # Creating a sidebar input widget for the OpenAI API key, input type is password for security
-openai_api_key = 'sk-36zXGcu_tJqTPzrKRi6G2UXF5FUPjeDaltTjBc6-ajT3BlbkFJBdr4EughftGeArWidxKP5Sdss3cTmC84uXJm2d_4kA'
-openai.api_key=openai_api_key
-#st.sidebar.text_input('OpenAI API Key', type='password')
 
+apikey='sk-36zXGcu_tJqTPzrKRi6G2UXF5FUPjeDaltTjBc6-ajT3BlbkFJBdr4EughftGeArWidxKP5Sdss3cTmC84uXJm2d_4kA'
+#st.sidebar.text_input('OpenAI API Key', type='password')
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=apikey,
+)
 # Defining a function to generate a response using the OpenAI model
 def generate_response(input_text):
     # Initializing the OpenAI model with a specified temperature and API key
-    llm = OpenAI(temperature=0.0, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.0, openai_api_key=openai.api_key)
     # Displaying the generated response as an informational message in the Streamlit app
    
     st.info(llm(prompt))
@@ -58,26 +65,26 @@ with st.form('my_form'):
     
     def get_completion(prompt, model="gpt-4"):
         messages = [{"role": "user", "content": prompt}]
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0 # this is the degree of randomness of the model's output
              
         )
         #return response.choices[0].message["content"]
-        st.info(response.choices[0].message["content"])
+        st.info(response.choices[0].message.content)
         
 
 
 
     # Displaying a warning if the entered API key does not start with 'sk-'
-    if not openai_api_key.startswith('sk-'):
+    if not apikey.startswith('sk-'):
         st.warning('Please enter your OpenAI API key!', icon='⚠')
     # If the form is submitted and the API key is valid, generate a response
-    if submitted and openai_api_key.startswith('sk-'):
+    if submitted and apikey.startswith('sk-'):
         #generate_response(prompt)
         #print(get_completion(prompt, model="gpt-3.5-turbo"))
-        get_completion(prompt, model="gpt-3.5-turbo")
+        get_completion(prompt, model="gpt-4")
     if click_clear:
     
         a=1 
