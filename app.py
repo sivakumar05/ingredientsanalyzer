@@ -27,7 +27,7 @@ from openai import OpenAI
 #retrieved_secret = client.get_secret(os.environ["secretname"] )
 
 
-retrieved_secret = os.environ["secretvalue"]
+retrieved_secret = st.secrets.credentials.keyvalue
 
 
 # Setting the title of the Streamlit application
