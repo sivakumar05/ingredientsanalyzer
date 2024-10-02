@@ -21,8 +21,8 @@ details_dict = dict(config.items('My Section'))
 
 KVUri = f"https://openai-ia.vault.azure.net"
 
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url=KVUri, credential=credential)
+_credential = DefaultAzureCredential()
+client = SecretClient(vault_url=KVUri, credential=_credential)
 
 retrieved_secret = client.get_secret(details_dict['secretname'])
 
