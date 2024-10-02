@@ -8,23 +8,26 @@ References:
 
 import streamlit as st
 import os 
-from azure.keyvault.secrets import SecretClient
-from azure.identity import DefaultAzureCredential
+#from azure.keyvault.secrets import SecretClient
+#from azure.identity import DefaultAzureCredential
 #import openai 
 from openai import OpenAI
-import configparser
+#import configparser
 
-config = configparser.RawConfigParser()
-config.read('config.ini')
+#config = configparser.RawConfigParser()
+#config.read('config.ini')
     
-details_dict = dict(config.items('My Section'))
+#details_dict = dict(config.items('My Section'))
 
-KVUri = f"https://openai-ia.vault.azure.net"
+#KVUri = f"https://openai-ia.vault.azure.net"
 
-_credential = DefaultAzureCredential()
-client = SecretClient(vault_url=KVUri, credential=_credential)
+#_credential = DefaultAzureCredential()
+#client = SecretClient(vault_url=KVUri, credential=_credential)
 
-retrieved_secret = client.get_secret(details_dict['secretname'])
+#retrieved_secret = client.get_secret(os.environ["secretname"] )
+
+print(os.environ["secretvalue"])
+retrieved_secret = os.environ["secretvalue"]
 
 
 # Setting the title of the Streamlit application
@@ -37,7 +40,7 @@ st.title('Product Ingredients Analyzer')
 
 
 client = OpenAI(
-    api_key=retrieved_secret.value
+    api_key=  retrieved_secret #retrieved_secret.value
     )
 
 #openai.api_key = retrieved_secret.value
