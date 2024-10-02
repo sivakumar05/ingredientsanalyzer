@@ -26,7 +26,7 @@ from openai import OpenAI
 
 #retrieved_secret = client.get_secret(os.environ["secretname"] )
 
-print(os.environ["secretvalue"])
+
 retrieved_secret = os.environ["secretvalue"]
 
 
