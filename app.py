@@ -18,13 +18,13 @@ config = configparser.RawConfigParser()
 config.read('config.ini')
     
 details_dict = dict(config.items('My Section'))
-print(details_dict)
+
 KVUri = f"https://openai-ia.vault.azure.net"
 
 credential = DefaultAzureCredential()
 client = SecretClient(vault_url=KVUri, credential=credential)
-
-retrieved_secret = client.get_secret('openai')
+print(details_dict)
+retrieved_secret = client.get_secret(details_dict['secretname'])
 
 
 # Setting the title of the Streamlit application
